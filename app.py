@@ -8,7 +8,7 @@ st.set_page_config(page_title="کارت ویزیت", layout="centered")
 data = {
     "logoText": "GH",
     "fullName": "گلاره هوشمندیان",
-    "jobTitle": " و دورهٔ تربیت مدرس در تمامی سطوح و سنینIELTS مدرس زبان اینگلیسی",
+    "jobTitle": " مدرس زبان انگلیسی , ایلتس و دورهٔ تربیت مدرس در تمامی سطوح و سنین",
     "phone": "+989125768056",
     "email": "Gelarehhm92@gmail.com",
 }
@@ -117,20 +117,7 @@ card_html = f"""
     </div>
   </div>
 
-  <!-- کارت سفید -->
-  <div class="paper-card">
-    <div style="display:flex;gap:12px;align-items:center">
-      <div class="logo paper-logo">{data["logoText"]}</div>
-      <div>
-        <h2 style="margin:0;font-size:18px">{data["fullName"]}</h2>
-        <p style="color:#475569;font-size:13px">{data["jobTitle"]}</p>
-      </div>
-    </div>
-    <div style="font-size:13px;color:#374151;margin-top:auto">
-      <div><strong>ایمیل:</strong> {data["email"]}</div>
-    </div>
-  </div>
-
+  
 </div>
 """
 
