@@ -1,125 +1,136 @@
-import streamlit as st
-from streamlit.components.v1 import html
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>کارت ویزیت - نمونه</title>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#ffb6c1; /* تیره */
+      --accent:#ff69b4; /* فیروزه‌ای */
+      --card-bg:#ffc0cb;
+      --muted:rgb(255, 168, 232);
+      --paper:#ffffff;
+      --paper-text:#111827;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:'Vazirmatn',system-ui,ui-sans-serif,Segoe UI,Roboto,'Helvetica Neue',Arial}
+    body{display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#071026 0%,#071022 100%);padding:30px}
 
-# تنظیمات صفحه
-st.set_page_config(page_title="کارت ویزیت", layout="centered")
+    /* قاب کلی کارت */
+    .card-wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:center}
 
-# داده‌های کارت ویزیت
-data = {
-    "logoText": "GH",
-    "fullName": "گلاره هوشمندیان",
-    "jobTitle": " مدرس زبان انگلیسی , ایلتس و دورهٔ تربیت مدرس در تمامی سطوح و سنین",
-    "phone": "+989125768056",
-    "email": "Gelarehhm92@gmail.com",
-}
+    /* کارت واقعی (برای چاپ هم مناسب) */
+    .biz-card{
+      width:350px;height:200px;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 10px 30px rgba(2,6,23,0.6);
+      background:linear-gradient(135deg,var(--card-bg),#071021);
+      color:white;padding:18px;display:flex;flex-direction:column;justify-content:space-between;
+    }
 
-# HTML و CSS کارت ویزیت اصلاح شده
-card_html = f"""
-<style>
-  body {{
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }}
-  .card-wrap {{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    align-items: center;
-    justify-items: center;
-  }}
-  .biz-card, .paper-card {{
-    width: 100%;
-    max-width: 350px;
-    border-radius: 14px;
-    padding: 18px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    box-sizing: border-box;
-  }}
-  .biz-card {{
-    background: linear-gradient(135deg,#ffc0cb,#071021);
-    color: white;
-    box-shadow:0 10px 30px rgba(2,6,23,0.6);
-  }}
-  .paper-card {{
-    background: white;
-    color: #111827;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
-  }}
-  .logo {{
-    width: 64px;
-    height: 64px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 700;
-    font-size: 20px;
-  }}
-  .biz-logo {{
-    background: linear-gradient(135deg,#ff69b4,#7c3aed);
-    color: white;
-    box-shadow:0 6px 18px rgba(6,11,28,0.6);
-  }}
-  .paper-logo {{
-    background: linear-gradient(90deg,#e2e8f0,#c7d2fe);
-    color: #111827;
-  }}
-  .contact {{
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-    margin-top: 10px;
-  }}
-  .chip {{
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 10px;
-    border-radius: 10px;
-    font-size: 13px;
-    background: rgba(255,255,255,0.03);
-  }}
-  .cta {{
-    background: linear-gradient(90deg,#ff69b4,#7c3aed);
-    padding: 8px 12px;
-    border-radius: 10px;
-    font-weight: 600;
-    color: #021023;
-    text-align: center;
-    width: fit-content;
-    cursor: pointer;
-  }}
-  @media (max-width: 740px) {{
-    .card-wrap {{
-      grid-template-columns: 1fr;
-    }}
-  }}
-</style>
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:64px;height:64px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:white;box-shadow:0 6px 18px rgba(6,11,28,0.6)}
+    .brand h1{font-size:18px;margin:0}
+    .brand p{margin:0;color:var(--muted);font-size:13px}
 
-<div class="card-wrap">
+    .contact{display:flex;gap:12px;flex-wrap:wrap}
+    .chip{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.03);font-size:13px}
+    .chip svg{width:16px;height:16px;opacity:0.9}
 
-  <!-- کارت تیره -->
-  <div class="biz-card">
-    <div style="display:flex;align-items:center;gap:12px">
-      <div class="logo biz-logo">{data["logoText"]}</div>
-      <div>
-        <h2 style="margin:0">{data["fullName"]}</h2>
-        <p style="margin:0;font-size:13px;color:rgba(255,168,232,0.9)">{data["jobTitle"]}</p>
+    .footer{display:flex;justify-content:space-between;align-items:center}
+    .cta{background:linear-gradient(90deg,var(--accent),#7c3aed);padding:8px 12px;border-radius:10px;font-weight:600;color:#021023}
+
+    /* نمای چاپ (سفید) */
+    .paper-card{width:350px;height:200px;border-radius:10px;background:var(--paper);color:var(--paper-text);padding:18px;display:flex;flex-direction:column;justify-content:space-between}
+    .paper-card .logo{background:linear-gradient(90deg,#e2e8f0,#c7d2fe);color:var(--paper-text)}
+    .paper-card .chip{background:transparent}
+
+    /* حالت ریسپانسیو کوچک */
+    @media (max-width:740px){
+      .card-wrap{grid-template-columns:1fr}
+      body{padding:12px}
+    }
+
+    /* برای چاپ بی‌حاشیه: */
+    @media print{
+      body{background:white}
+      .card-wrap{gap:6px}
+      .biz-card, .paper-card{box-shadow:none;border-radius:4px}
+    }
+
+    /* راهنمای تغییر سریع: */
+    /* فقط کافی‌ست متن‌های فارسی زیر را عوض کنید: */
+  </style>
+</head>
+<body>
+  <div class="card-wrap">
+
+    <!-- کارت تیره (نمای آنلاین) -->
+    <article class="biz-card" aria-label="کارت ویزیت">
+      <div class="brand">
+        <div class="logo" id="logoText">شما</div>
+        <div>
+          <h1 id="fullName">نام و نام خانوادگی</h1>
+          <p id="jobTitle">مدرس زبان انگلیسی ,ایتس و دوره های تربیت مدرس برای تمامی ی سطوح و تمامی سنین </p>
+        </div>
       </div>
-    </div>
-    <div class="contact">
-      <div class="chip">📞 {data["phone"]}</div>
-      <div class="chip">📧 {data["email"]}</div>
-    </div>
-    <div style="margin-top:auto;display:flex;justify-content:flex-end">
-      <div class="cta">Contact</div>
-    </div>
+
+      <div class="contact">
+        <div class="chip" title="Phone">
+          <!-- phone icon -->
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92V20a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.86 19.86 0 0 1 2 4.18 2 2 0 0 1 4 2h3.09a2 2 0 0 1 2 1.72c.12 1.05.33 2.07.62 3.05a2 2 0 0 1-.45 1.95L8.91 10.9a16 16 0 0 0 6 6l1.18-1.18a2 2 0 0 1 1.95-.45c.98.29 2 .5 3.05.62A2 2 0 0 1 22 16.92z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="phone">+98 9125768056</span>
+        </div>
+
+        <div class="chip" title="Email">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 8l9 6 9-6" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 8v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span id="email">Gelarehhm92@gmail.com</span>
+        </div>
+
+
+      </div>
+
+      <div class="footer">
+        
+        <div class="cta">Contact</div>
+      </div>
+    </article>
+
+ 
   </div>
 
-  
-</div>
-"""
+  <!-- اسکریپت ساده برای ویرایش سریع (می‌توانید مقادیر را تغییر دهید) -->
+  <script>
+    /* مقادیر کارت را اینجا تنظیم کنید */
+    const data = {
+      logoText: 'GH',
+      fullName: 'گلاره هوشمندیان',
+      jobTitle: 'مدرس زبان انگلیسی ,ایلتس و دوره های تربیت مدرس در تمامی سطوح و تمامی سنین',
+      phone: '+989125768056',
+      email: 'Gelarehhm92@gmail.com',
+    };
 
-# نمایش HTML در Streamlit
-html(card_html, height=500)
+    // پر کردن فیلدها
+    document.getElementById('logoText').textContent = data.logoText;
+    document.getElementById('logoText2').textContent = data.logoText;
+    document.getElementById('fullName').textContent = data.fullName;
+    document.getElementById('fullName2').textContent = data.fullName;
+    document.getElementById('jobTitle').textContent = data.jobTitle;
+    document.getElementById('jobTitle2').textContent = data.jobTitle;
+    document.getElementById('phone').textContent = data.phone;
+    document.getElementById('phone2').textContent = data.phone;
+    document.getElementById('email').textContent = data.email;
+    document.getElementById('email2').textContent = data.email;
+
+    // برای چاپ آسان: باز کردن پنجره چاپ
+    function printCard(){
+      window.print();
+    }
+
+    // اگر خواستید اطلاعات را از prompt بگیرید (فعالسازی دلخواه)
+    // const name = prompt('اسم خود را وارد کنید:');
+    // if(name) document.getElementById('fullName').textContent = document.getElementById('fullName2').textContent = name;
+  </script>
+
+</body>
+</html>
