@@ -127,7 +127,6 @@ card_html = f"""
       </div>
     </div>
     <div style="font-size:13px;color:#374151;margin-top:auto">
-      <div><strong>تلفن:</strong> {data["phone"]}</div>
       <div><strong>ایمیل:</strong> {data["email"]}</div>
     </div>
   </div>
